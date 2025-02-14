@@ -139,8 +139,15 @@ Saída esperada:
    ![evaluation_plot](./figures/evaluation_plot.png)
    - Isso indica que a combinação de downsampling + média móvel com um MLP é eficaz para detectar falhas no conjunto de dados MAFAULDA.
 
+## Próximos Passos
+
+1. **Otimização de Hiperparâmetros**: Grid Search, Evolutionary optimization ou Bayesian optimization para ajustar quantidade de `hidden layers`, taxa de aprendizado e dropout..
+2. **Redes Neurais mais Complexas**: Testar CNN, LSTM e outras redes que podem considerar informação temporal nativamente sem a necessidade de produção de features.
+3. **Consideração de Mais Classes**: Expandir para todas as falhas do dataset MAFAULDA.
+
+
 ## Considerações finais
 
 Este repositório fornece uma solução eficiente para a classificação de falhas em máquinas, utilizando como modelo a rede neural mais simplista possível com arquitetura da rede parametrizavel. Após a aplicação de pre-processamento, ou então geração de novas features para incorporar relações temporais na entrada da rede neural, conseguimos atingir excelentes resultados.
 
-Yuri Marca 2025
+### Autor e data: Yuri Marca, 2025
