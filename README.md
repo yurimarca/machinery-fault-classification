@@ -68,7 +68,7 @@ A detecção de falhas mecânicas frequentemente se baseia na análise de sinais
 
 ---
 
-## Uso
+## Passos Desenvolvidos
 
 ### 1. Análise Exploratória de Dados (EDA)
 - **Arquivo**: `notebooks/EDA.ipynb`
