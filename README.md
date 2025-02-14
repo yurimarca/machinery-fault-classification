@@ -72,20 +72,28 @@ A detecção de falhas mecânicas frequentemente se baseia na análise de sinais
 
 ### 1. Análise Exploratória de Dados (EDA)
 - **Arquivo**: `notebooks/EDA.ipynb`
-- Carrega os dados e verifica estatísticas básicas com `ydata-profiling`.
+- Carrega os dados e verifica estatísticas básicas com `ydata-profiling`. 
+- Para os dados normais foi gerado um relatório em html disponível em `notebooks/normal_data_report.html`.
+	- Podemos notar que as features são normalmente distribuídas.
+	- Poderíamos descartar uma das features `underhang_radiale` e `microphone` pois possuem alta correlação como é destacado em alertas.
 - Plota sinais de séries temporais (normal vs. desbalanceado) para observação de diferenças.
 
 ### 2. Engenharia de Features
 - **Arquivo**: `notebooks/FeatureEngineering.ipynb`
 - Aplica downsampling para reduzir ruído de alta frequência.
-- Usa média por janela deslizante para suavização.
+- Usa média por janela deslizante para suavização e incorporação de dados históricos.
 - Visualiza t-SNE nos dados transformados para confirmar separabilidade dos rótulos.
+	- Notamos uma clara separação entre os dois rótulos através do método de diminuição de dimensionalidade t-SNE.
+	- Isso indica que podemos encontrar uma regra (ou treinar um modelo) que separe os dados com sucesso. 
 
 ### 3. Treinamento do Modelo (MLP)
 - **Arquivo**: `notebooks/MLP_Training.ipynb`
-- Constrói um MLP parametrizável no PyTorch para classificação.
-- Treina o modelo com as features engenheiradas.
-- Monitora métricas como acurácia, perda e outros indicadores de desempenho.
+- Como a separação não-linear dos dados parece claramente distinguiras classes, decidi utilizar uma rede neural padrão Multi-Layer Perceptron (MLP).
+- Mesmo que esse modelo não tenha caracteristicas para considerar componentes de time-series, a feature engineering incorpora noção temporal ao computar a uma média das features em formato de rolling time window.
+- MLP parametrizável no PyTorch para classificação.
+- Treina o modelo com as features computadas.
+- Monitora métricas como acurácia e outros indicadores de desempenho.
+- Após o treinamento de um modelo de MLP simples e sem muitos testes, parti para a produção do `main.py`.
 
 
 ### 4. Pipeline PyTorch Principal (`main.py`)
@@ -93,7 +101,7 @@ A detecção de falhas mecânicas frequentemente se baseia na análise de sinais
 
 **Exemplo de Execução:**
 ```bash
-python main.py
+python src/main.py
 ```
 Saída esperada:
 - **Plots de Perda & Acurácia** em `../figures/`
@@ -110,17 +118,18 @@ Saída esperada:
 2. **Engenharia de Features**  
    - Aplica downsampling e cálculo de média por janela deslizante.  
    - Normaliza os dados usando `StandardScaler`.
-   - Visualiza os resultados do t-SNE para verificar separabilidade das classes.  
+   - Visualiza os resultados do t-SNE para verificar separabilidade das classes. Resultados sugerem clara separação dos dados, dando bons indícios para o treinamento de um modelo MLP. 
    ![tsne_visualization](./figures/tsne_visualization.png)
-   - Gera matriz de correlação entre as features e o label.  
+   - Gera matriz de correlação entre as features e o label. Podemos notar que `microphone_rolling` possui correlação com label, indicando uma excelente feature para classificação.
    ![correlation_matrix](./figures/correlation_matrix.png)
 
 3. **Divisão dos Dados**  
-   - Usa um método baseado em séries temporais (`time_series_split`) para criar os conjuntos de **treino**, **validação** e **teste**.  
+   - Usa um método baseado em séries temporais (`time_series_split`) para criar os conjuntos de **treino**, **validação** e **teste**. 
+   - Esta função é importante pois considera e preserva a caracteristica de time series dos dados.
    - Garante que cada conjunto mantenha uma proporção balanceada dos dados.
 
 4. **Treinamento**  
-   - Constrói um `TimeSeriesMLP` com hiperparâmetros configuráveis (hidden_dim, n_layers, dropout_prob).  
+   - Constrói um `TimeSeriesMLP` com hiperparâmetros configuráveis `(hidden_dim, n_layers, dropout_prob)`.  
    - Treina por até 50 épocas, registrando a perda e acurácia de validação a cada época.  
    ![training_loss_plot](./figures/training_loss_plot.png)
    ![training_accuracy_plot](./figures/training_accuracy_plot.png)
