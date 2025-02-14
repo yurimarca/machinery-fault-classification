@@ -148,6 +148,6 @@ Saída esperada:
 
 ## Considerações finais
 
-Este repositório fornece uma solução eficiente para a classificação de falhas em máquinas, utilizando como modelo a rede neural mais simplista possível com arquitetura da rede parametrizavel. Após a aplicação de pre-processamento, ou então geração de novas features para incorporar relações temporais na entrada da rede neural, conseguimos atingir excelentes resultados.
+Este repositório fornece uma solução eficiente para a classificação de falhas em máquinas, utilizando como modelo a rede neural mais simplista possível com arquitetura da rede parametrizável. Após a aplicação de pre-processamento, ou então geração de novas features para incorporar relações temporais na entrada da rede neural, conseguimos atingir excelentes resultados.
 
-### Autor e data: Yuri Marca, 2025
+### Yuri Marca, 2025
