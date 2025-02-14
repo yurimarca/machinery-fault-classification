@@ -138,3 +138,9 @@ Saída esperada:
 	- Os resultados finais demonstram que o modelo conseguiu distinguir com eficácia entre condições normais e de falha:
    ![evaluation_plot](./figures/evaluation_plot.png)
    - Isso indica que a combinação de downsampling + média móvel com um MLP é eficaz para detectar falhas no conjunto de dados MAFAULDA.
+
+## Considerações finais
+
+Este repositório fornece uma solução eficiente para a classificação de falhas em máquinas, utilizando como modelo a rede neural mais simplista possível com arquitetura da rede parametrizavel. Após a aplicação de pre-processamento, ou então geração de novas features para incorporar relações temporais na entrada da rede neural, conseguimos atingir excelentes resultados.
+
+Yuri Marca 2025
