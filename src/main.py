@@ -332,9 +332,6 @@ def time_series_split(all_data, train_ratio=0.7, val_ratio=0.15):
 
     return train_data, val_data, test_data
 
-import matplotlib.pyplot as plt
-import seaborn as sns
-
 def plot_evaluation_results(metrics, output_file="../figures/evaluation_results.png"):
     """
     Generates a bar plot of model evaluation metrics and saves it to an image file.
